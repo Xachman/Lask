@@ -1,0 +1,11 @@
+<?php 
+//db config
+define('HOST', '');
+define('USER', '');
+define('PASS', '');
+define('DB', '');
+
+//site config
+define('ROOT_URL', $_SERVER['DOCUMENT_ROOT'].'/apptemplate/');
+// Could be http://localhost/apptemplate is using Xampp
+define('SITE_URL','http://apptemplate.com');
