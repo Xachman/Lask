@@ -20,7 +20,7 @@ $sc->menu[] = array( $sc->siteURL.'logout', 'Logout');
 
 
 
-include 'header.php'; 
+include 'header.php';
 if($user_ok){
 	if($sc->selectPage($sc)) {
 	}else{
@@ -72,7 +72,7 @@ if($user_ok){
 			});
 		})
 		</script>
-	<?php 
+	<?php
 	}
 }
-include 'footer.php'; ?>  
+include 'footer.php'; ?>

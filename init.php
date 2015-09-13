@@ -6,7 +6,7 @@ $sc->css($sc->siteURL.'css/sasscompiler?p=sass.scss');
 $sc->css('http://fonts.googleapis.com/css?family=Droid+Serif:400,700|Roboto:400,700');
 $sc->js('//code.jquery.com/jquery-1.11.3.min.js');
 $sc->js('//code.jquery.com/ui/1.11.4/jquery-ui.js');
-$sc->js($sc->siteURL.'js/app.js');
+
 
 
 //Check if there is a user

@@ -20,9 +20,9 @@ class SiteControl {
 		}
 		//var_dump($this);
 		$this->sanitizeData();
-		
+
 	}
-	
+
 	public function filterURLS () {
 		$args = func_get_args();
 
@@ -56,14 +56,17 @@ class SiteControl {
 	public function selectPage($sc) {
 		global $db, $log_id, $log_username, $user_ok, $db;
 		if($this->getRequestURL() == '/') return false;
-		$url_ex = explode('/', $this->getRequestURL()); 
-		//var_dump($url_ex);
+		$url_ex = explode('/', $this->getRequestURL());
+
 		$this->page = $url_ex[1];
-		if($url_ex[1]){
+	//	var_dump($this->page);
+		if(file_exists($this->rootURL.'/template/'.$this->page.'.php')){
 			return include($this->rootURL.'/template/'.$this->page.'.php');
+		}elseif(file_exists($this->rootURL.'/core/'.$this->page.'.php')){
+			return include($this->rootURL.'/core/'.$this->page.'.php');
 		}else{
 			$this->page404();
-			// $count = count($url_ex)-1; 
+			// $count = count($url_ex)-1;
 			// $url_ex[$count] = strstr(end($url_ex), '?', true);
 			// //var_dump(end($url_ex));
 			// $new_url = implode('/', $url_ex);
@@ -72,9 +75,12 @@ class SiteControl {
 
 	}
 	public function checkLogin($sc) {
-		$url = explode('/', $this->getRequestURL()); 
+		$url = explode('/', $this->getRequestURL());
 		if($url[1] == 'login-processor') {
-			return include($this->rootURL.'/template/'.$url[1] .'.php');
+			if(file_exists($this->rootURL.'/template/'.$url[1] .'.php'))
+				return include($this->rootURL.'/template/'.$url[1] .'.php');
+			else if(file_exists($this->rootURL.'/core/'.$url[1] .'.php'))
+				return include($this->rootURL.'/core/'.$url[1] .'.php');
 			die;
 		}
 	}
@@ -90,19 +96,30 @@ class SiteControl {
 		$count = count($url) - 1;
 		if(strstr($url[$count], '?', true)) $url[$count] = strstr($url[$count], '?', true);
 		$php_check = explode('.',end($url));
+
 		//var_dump($url);
 		if(!isset($php_check[1]) && $php_check[0]){
-			return include($this->rootURL.'/template/css/'.$url[2].'.php');
+			if(file_exists($this->rootURL.'/template/css/'.$url[2].'.php')){
+				return include($this->rootURL.'/template/css/'.$url[2].'.php');
+			}else{
+				//var_dump($url);
+				return include($this->rootURL.'/core/css/'.$url[2].'.php');
+			}
 		}else{
-			//var_dump($url);
+		//	var_dump($url);
 			if(file_exists ($this->rootURL.'/template/'.$url[1].'/'.$url[2]))
+				return include($this->rootURL.'/template/'.$url[1].'/'.$url[2]);
+			elseif(file_exists ($this->rootURL.'/core/'.$url[1].'/'.$url[2]))
 				return include($this->rootURL.'/template/'.$url[1].'/'.$url[2]);
 			else
 				$this->page404();
 		}
 	}
 	public function page404() {
+		if(file_exists($this->rootURL.'/template/404.php'))
 			return include($this->rootURL.'/template/404.php');
+		else
+			return include($this->rootURL.'/core/404.php');
 	}
 	public function message($message, $link, $link_text) {
 		$_SESSION['message'] = $message;
@@ -112,7 +129,7 @@ class SiteControl {
 	}
 	public function checkDbf() {
 		global $db, $log_id, $log_username, $user_ok, $db;
-		$url = explode('/', $this->getRequestURL()); 
+		$url = explode('/', $this->getRequestURL());
 		if($url[1] == 'dbf') {
 			return include($this->rootURL.'/dbf/'.$url[2].'.php');
 		}else{
@@ -155,8 +172,8 @@ class SiteControl {
 // for server $sc = new SiteControl(array('rootURL' => $_SERVER['DOCUMENT_ROOT'].'/', 'siteURL' => '/'));
 $sc = new SiteControl(array('rootURL' => ROOT_URL, 'siteURL' => SITE_URL));
 //var_dump($sc->rootURL);
-if ($sc->debug) { 
+if ($sc->debug) {
 	ini_set('display_errors',1);
 	ini_set('display_startup_errors',1);
 	error_reporting(-1);
-} 	
+}
