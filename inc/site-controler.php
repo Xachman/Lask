@@ -14,11 +14,9 @@ class SiteControl {
 	private $js = array();
 	public function __construct() {
 		$args = func_get_args();
-		//var_dump($args);
 		foreach ($args[0] as $key => $val) {
 			$this->{$key} = $val;
 		}
-		//var_dump($this);
 		$this->sanitizeData();
 
 	}
@@ -59,18 +57,12 @@ class SiteControl {
 		$url_ex = explode('/', $this->getRequestURL());
 
 		$this->page = $url_ex[1];
-	//	var_dump($this->page);
-		if(file_exists($this->rootURL.'/template/'.$this->page.'.php')){
-			return include($this->rootURL.'/template/'.$this->page.'.php');
-		}elseif(file_exists($this->rootURL.'/core/'.$this->page.'.php')){
-			return include($this->rootURL.'/core/'.$this->page.'.php');
+		if(file_exists($this->rootURL.'/template/'.$this->getRequestURL().'.php')){
+			return include($this->rootURL.'/template/'.$this->getRequestURL().'.php');
+		}elseif(file_exists($this->rootURL.'/core/'.$this->getRequestURL().'.php')){
+			return include($this->rootURL.'/core/'.$this->getRequestURL().'.php');
 		}else{
 			$this->page404();
-			// $count = count($url_ex)-1;
-			// $url_ex[$count] = strstr(end($url_ex), '?', true);
-			// //var_dump(end($url_ex));
-			// $new_url = implode('/', $url_ex);
-			// return include($this->rootURL.$new_url.'.php');
 		}
 
 	}

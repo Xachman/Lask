@@ -4,9 +4,8 @@ include 'inc/site-controler.php';
 $sc->checkLogin($sc);
 include 'inc/check-login.php';
 include 'init.php';
-if(file_exists ($sc->rootURL.'inc/init/db-init.php')) {
+if(file_exists($sc->rootURL.'inc/init/db-init.php')) {
 	include($sc->rootURL.'inc/init/db-init.php');
-	die;
 }
 
 if($user_ok){
