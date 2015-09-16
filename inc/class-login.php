@@ -6,11 +6,9 @@ class Login {
       $this->db = $db;
   }
   public function failed_login($conx, $e, $ip) {
-    //var_dump($this->db->query_row("UPDATE login_attempts SET attempts=attempts + 1, username='$e' WHERE ip='$ip' LIMIT 1"));
-  	if(!$this->db->query_row("UPDATE login_attempts SET attempts=attempts + 1, username='$e' WHERE ip='$ip' LIMIT 1")){
-      $this->db->insert_row("INSERT INTO login_attempts (ip, attempts, username) VALUES ('$ip', 1, '$e')");
+  	if(!$this->db->query_row("UPDATE login_attempts SET attempts=attempts + 1, username='$e', last_attempt=NOW() WHERE ip='$ip' LIMIT 1")){
+      $this->db->insert_row("INSERT INTO login_attempts (ip, attempts, username, last_attempt) VALUES ('$ip', 1, '$e', NOW())");
     }
-
   }
 
   public function login_success($conx, $e, $ip) {

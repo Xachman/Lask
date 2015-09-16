@@ -16,7 +16,7 @@ if(mysqli_connect_errno()){
 if(!class_exists('Db')){
 	class Db {
 		public $conx;
-
+		public $debug = true;
 		public function __construct() {
 	        $arguments = func_get_args();
 
@@ -85,6 +85,9 @@ if(!class_exists('Db')){
 		public function query_row( $sqlstr ) {
 			$sql = $sqlstr ;
 			$query = mysqli_query($this->conx, $sql);
+			if($this->debug && mysqli_error ($this->conx)){
+				echo mysqli_error($this->conx);
+			}
 			return mysqli_affected_rows($this->conx);
 		}
 		public function return_query($sql){
@@ -99,9 +102,7 @@ if(!class_exists('Db')){
 		        return $res->field_count > 0 ? true : false;
 		    } else return false;
 		}
-		
+
 	}
 	$db = new Db(array('conx'=>$db_conx));
 }
-
-
