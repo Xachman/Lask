@@ -25,7 +25,7 @@ $db->query_row("CREATE TABLE IF NOT EXISTS `login_attempts` (
   `attempts` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
   `throttle` varchar(255) NOT NULL,
-  `last_login` DATETIME NOT NULL
+  `last_attempt` DATETIME NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1");
 
 if(!$db->tableExists('users')){
