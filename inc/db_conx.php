@@ -32,6 +32,9 @@ if(!class_exists('Db')){
 		public function select_row($sqlstr) {
 			$sql = $sqlstr;
 			$query = mysqli_query($this->conx, $sql);
+			if($this->debug && mysqli_error ($this->conx)){
+				echo mysqli_error($this->conx);
+			}
 			return mysqli_fetch_row($query);
 		}
 		public function insert_row($sqlstr) {

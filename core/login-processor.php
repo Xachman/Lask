@@ -1,16 +1,18 @@
 <?php
 include($sc->rootURL.'inc/class-login.php');
+include_once($sc->rootURL.'inc/db_conx.php');
+
 if (isset($_POST['email'])){
-	include_once($sc->rootURL.'inc/db_conx.php');
+
 
 	$e = mysqli_real_escape_string($db_conx, $_POST['email']);
 	$p = $_POST['password'];
+	$login->check_login($e);
 
-	$ip = preg_replace('#[^0-9.]#', '', getenv('REMOTE_ADDR'));
 
 	if($e == "" || $p == "") {
 		echo "login failed";
-		$login->failed_login($db_conx, $e, $ip);
+		$login->failed_login($db_conx, $e);
 		exit();
 	} else {
 		$row= $db->select_row("SELECT id, username, password, level FROM users WHERE email='$e' LIMIT 1");
@@ -19,10 +21,10 @@ if (isset($_POST['email'])){
 		$db_pass_str = $row[2];
 		if (!$login->check_pass($p, $db_pass_str)) {
 			echo "login failed";
-			$login->failed_login($db_conx, $e, $ip);
+			$login->failed_login($db_conx, $e);
 			exit();
 		} else {
-			$login->login_success($db_conx, $e, $ip);
+			$login->login_success($db_conx, $e);
 			$_SESSION['userid'] = $db_id;
 			$_SESSION['username'] = $db_username;
 			$_SESSION['password'] = $db_pass_str;

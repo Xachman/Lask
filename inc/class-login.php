@@ -2,26 +2,37 @@
 include($sc->rootURL.'inc/db_conx.php');
 class Login {
   private $db;
+  private $ip;
   function __construct($db) {
       $this->db = $db;
+      $this->ip = preg_replace('#[^0-9.]#', '', getenv('REMOTE_ADDR'));
   }
-  public function failed_login($conx, $e, $ip) {
-  	if(!$this->db->query_row("UPDATE login_attempts SET attempts=attempts + 1, username='$e', last_attempt=NOW() WHERE ip='$ip' LIMIT 1")){
-      $this->db->insert_row("INSERT INTO login_attempts (ip, attempts, username, last_attempt) VALUES ('$ip', 1, '$e', NOW())");
+  public function failed_login($conx, $e) {
+  	if(!$this->db->query_row("UPDATE login_attempts SET attempts=attempts + 1, username='$e', last_attempt=NOW() WHERE ip='$this->ip' LIMIT 1")){
+      $this->db->insert_row("INSERT INTO login_attempts (ip, attempts, username, last_attempt) VALUES ('$this->ip', 1, '$e', NOW())");
     }
   }
-
-  public function login_success($conx, $e, $ip) {
-  	$this->db->query_row("UPDATE login_attempts SET attempts=0, username='$e' WHERE ip='$ip' LIMIT 1");
+  public function check_login($e) {
+    $row = $this->db->select_row("SELECT attempts, throttle FROM login_attempts WHERE ip='$this->ip' LIMIT 1");
+    if($row[1] > time()) {
+      die('You must wait '.date('i',  $row[1] - time()).' minutes before logging in again.');
+    }elseif($row[0] > 4){
+      $time = strtotime('+ 5 minutes');
+      $this->db->query_row("UPDATE login_attempts SET throttle='$time', username='$e' WHERE ip=$this->ip  LIMIT 1");
+      die('You must wait 5 minutes before logging in again.');
+    }
   }
-  public function set_throttle($conx, $e, $ip, $time) {
+  public function login_success($conx, $e) {
+  	$this->db->query_row("UPDATE login_attempts SET attempts=0, username='$e' WHERE ip='$this->ip' LIMIT 1");
+  }
+  public function set_throttle($conx, $e, $time) {
   	if(!isset($time)){
   		$time = strtotime('5 minutes');
   	}
-  	$this->db->query_row("UPDATE login_attempts SET throttle='$time' WHERE ip='$ip' LIMIT 1");
+  	$this->db->query_row("UPDATE login_attempts SET throttle='$time' WHERE ip='$this->ip' LIMIT 1");
   }
-  public function adjust_attempts($conx, $e, $ip, $a) {
-  	$this->db->query_row("UPDATE login_attempts SET attempts=$a WHERE ip='$ip' LIMIT 1");
+  public function adjust_attempts($conx, $e, $a) {
+  	$this->db->query_row("UPDATE login_attempts SET attempts=$a WHERE ip='$this->ip' LIMIT 1");
   }
   public function crypt_pass($input, $rounds = 10) {
   	$salt = "";
