@@ -18,7 +18,7 @@ class Login {
       die('You must wait '.date('i',  $row[1] - time()).' minutes before logging in again.');
     }elseif($row[0] > 4){
       $time = strtotime('+ 5 minutes');
-      $this->db->query_row("UPDATE login_attempts SET throttle='$time', username='$e' WHERE ip=$this->ip  LIMIT 1");
+      $this->db->query_row("UPDATE login_attempts SET throttle='$time', username='$e', attempts=0 WHERE ip=$this->ip  LIMIT 1");
       die('You must wait 5 minutes before logging in again.');
     }
   }
