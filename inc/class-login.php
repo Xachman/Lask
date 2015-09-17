@@ -7,10 +7,12 @@ class Login {
       $this->db = $db;
       $this->ip = preg_replace('#[^0-9.]#', '', getenv('REMOTE_ADDR'));
   }
-  public function failed_login($conx, $e) {
+  public function failed_login($e) {
   	if(!$this->db->query_row("UPDATE login_attempts SET attempts=attempts + 1, username='$e', last_attempt=NOW() WHERE ip='$this->ip' LIMIT 1")){
       $this->db->insert_row("INSERT INTO login_attempts (ip, attempts, username, last_attempt) VALUES ('$this->ip', 1, '$e', NOW())");
     }
+    echo 'login failed';
+    die;
   }
   public function check_login($e) {
     $row = $this->db->select_row("SELECT attempts, throttle FROM login_attempts WHERE ip='$this->ip' LIMIT 1");
@@ -22,8 +24,13 @@ class Login {
       die('You must wait 5 minutes before logging in again.');
     }
   }
-  public function login_success($conx, $e) {
+  public function reset_attempts($e) {
   	$this->db->query_row("UPDATE login_attempts SET attempts=0, username='$e' WHERE ip='$this->ip' LIMIT 1");
+  }
+  public function login_success($db_username) {
+    $this->db->query_row("UPDATE users SET ip='$this->ip', last_login=now() WHERE username='$db_username' LIMIT 1");
+    echo 'success';
+    exit();
   }
   public function set_throttle($conx, $e, $time) {
   	if(!isset($time)){
