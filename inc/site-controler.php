@@ -18,12 +18,27 @@ class SiteControl {
 			$this->{$key} = $val;
 		}
 		$this->sanitizeData();
-
+		$this->processMenus();
 	}
 
 	public function filterURLS () {
 		$args = func_get_args();
 
+	}
+	public function processMenus() {
+		$menus = json_decode(file_get_contents($this->getTemplateFile('menu.json')), TRUE);
+		var_dump(array_search('~%', $menus));
+		//array_filter()
+		foreach ($menus as $menu => $val) {
+
+		}
+	}
+	public function getTemplateFile($file){
+		if(file_exists($this->rootURL.'/template/'.$file)){
+			return $this->rootURL.'/template/'.$file;
+		}elseif(file_exists($this->rootURL.'/core/'.$file)){
+			return $this->rootURL.'/core/'.$file;
+		}
 	}
 	private function sanitizeData() {
 		if(isset($_GET['p'])) {

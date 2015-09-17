@@ -13,9 +13,9 @@ if($user_ok){
 }
 $sc->processAssets($sc);
 //This is currently how Im adding my menus This will have to change
-$sc->menu = array();
-$sc->menu[] = array( $sc->siteURL, 'Home');
-$sc->menu[] = array( $sc->siteURL.'logout', 'Logout');
+// $sc->menu = array();
+// $sc->menu[] = array( $sc->siteURL, 'Home');
+// $sc->menu[] = array( $sc->siteURL.'logout', 'Logout');
 
 
 
