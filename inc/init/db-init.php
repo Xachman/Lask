@@ -17,7 +17,7 @@ $db->query_row(
   `activated` int(11) NOT NULL DEFAULT '0',
   `activation_key` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIUE KEY `id` (`id`)
+  UNIQUE KEY `id` (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=latin1"
 );
 $db->query_row("CREATE TABLE IF NOT EXISTS `login_attempts` (
