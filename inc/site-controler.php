@@ -39,12 +39,6 @@ class SiteControl {
 		if(isset($_GET['d'])) {
 			$this->data = preg_replace('#[^a-zA-Z-_]#', '', $_GET['d']);
 		}
-		if(isset($_GET['game'])) {
-			$this->game = preg_replace('#[^a-zA-Z-_]#', '', $_GET['game']);
-		}
-		if(isset($_GET['shop'])) {
-			$this->shop = preg_replace('#[^a-zA-Z-_]#', '', $_GET['shop']);
-		}
 	}
 	public function displayJsonData($sc) {
 		global $db, $log_id, $user_ok;
