@@ -25,16 +25,6 @@ class SiteControl {
 		$args = func_get_args();
 
 	}
-	public function processMenus() {
-		$menus = json_decode(file_get_contents($this->getTemplateFile('menu.json')), TRUE);
-		var_dump($menus);
-		$site_url_match = array_filter($example, function($var) use ($searchword) {
-			return preg_match("/\b$searchword\b/i", $var); 
-		});
-		foreach ($menus as $menu => $val) {
-
-		}
-	}
 	public function getTemplateFile($file){
 		if(file_exists($this->rootURL.'/template/'.$file)){
 			return $this->rootURL.'/template/'.$file;
