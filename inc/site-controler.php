@@ -27,8 +27,10 @@ class SiteControl {
 	}
 	public function processMenus() {
 		$menus = json_decode(file_get_contents($this->getTemplateFile('menu.json')), TRUE);
-		var_dump(array_search('~%', $menus));
-		//array_filter()
+		var_dump($menus);
+		$site_url_match = array_filter($example, function($var) use ($searchword) {
+			return preg_match("/\b$searchword\b/i", $var); 
+		});
 		foreach ($menus as $menu => $val) {
 
 		}
