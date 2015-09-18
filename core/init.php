@@ -11,8 +11,8 @@ $sc->js('//code.jquery.com/ui/1.11.4/jquery-ui.js');
 
 //Check if there is a user
 if($db->tableExists('users')){
-	$isUsers = $db->select_row("SELECT * FROM users LIMIT 1");
-	if(!$isUsers) {
+	$sc->isUsers = $db->select_row("SELECT id FROM users LIMIT 1");
+	if(!$sc->isUsers) {
 		include $sc->rootURL.'new-user-processor.php';
 	}
 }

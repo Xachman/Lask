@@ -3,7 +3,7 @@ include 'config.php';
 include 'inc/site-controler.php';
 $sc->checkLogin($sc);
 include 'inc/check-login.php';
-include 'init.php';
+$sc->load_init($sc);
 if(file_exists($sc->rootURL.'inc/init/db-init.php')) {
 	include($sc->rootURL.'inc/init/db-init.php');
 }
@@ -13,9 +13,9 @@ if($user_ok){
 }
 $sc->processAssets($sc);
 //This is currently how Im adding my menus This will have to change
-// $sc->menu = array();
-// $sc->menu[] = array( $sc->siteURL, 'Home');
-// $sc->menu[] = array( $sc->siteURL.'logout', 'Logout');
+$sc->menu = array();
+$sc->menu[] = array( $sc->siteURL, 'Home');
+$sc->menu[] = array( $sc->siteURL.'logout', 'Logout');
 
 
 
@@ -25,7 +25,7 @@ if($user_ok){
 	}else{
 	}
 }else{
-	if(!$isUsers) {
+	if(!$sc->isUsers) {
 		include($sc->rootURL.'inc/init/add-first-user.php');
 	}else{
 		if(file_exists($sc->rootURL.'template/login.php'))

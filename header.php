@@ -10,24 +10,7 @@
 	<body>
 		<header>
 			<div class="title">App Template</div>
-			<?php if($user_ok){ ?>
 			<nav>
-				<ul>
-					<?php
-						foreach ($sc->menu as $menu) {
-							echo '<li><a href="'.$menu[0].'">'.$menu[1].'</a></li>';
-						}
-					?>
-				<ul>
-				<?php
-				if($is_admin && isset($sc->adminMenu)){
-					echo '<ul>';
-							foreach ($sc->adminMenu as $menu) {
-								echo '<li><a href="'.$menu[0].'">'.$menu[1].'</a></li>';
-							}
-					echo'</ul>';
-				}
-				?>
+
 			</nav>
-			<?php } ?>
 		</header>

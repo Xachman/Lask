@@ -10,15 +10,16 @@ class SiteControl {
 	public $game;
 	public $shop;
 	public $debug = true;
+	public $init;
 	private $css = array();
 	private $js = array();
+	public $isUsers;
 	public function __construct() {
 		$args = func_get_args();
 		foreach ($args[0] as $key => $val) {
 			$this->{$key} = $val;
 		}
 		$this->sanitizeData();
-		$this->processMenus();
 	}
 
 	public function filterURLS () {
@@ -31,6 +32,17 @@ class SiteControl {
 		}elseif(file_exists($this->rootURL.'/core/'.$file)){
 			return $this->rootURL.'/core/'.$file;
 		}
+	}
+	public function make_menu($menu_name) {?>
+		<ul>
+			<?php
+				foreach ($menu_name as $menu) {
+					echo '<li><a href="'.$menu[0].'">'.$menu[1].'</a></li>';
+				}
+			?>
+		<ul>
+
+	<?php
 	}
 	private function sanitizeData() {
 		if(isset($_GET['p'])) {
@@ -141,6 +153,19 @@ class SiteControl {
 		//var_dump($html);
 		return $html;
 	}
+	public function load_init($sc) {
+		global $db;
+		$file = 'init.php';
+		if(file_exists($this->rootURL.'/template/'.$file)){
+			include($this->rootURL.'/template/'.$file);
+		}
+		if(file_exists($this->rootURL.'/core/'.$file)){
+			include($this->rootURL.'/core/'.$file);
+		}
+	}
+	public function add_init($hook, $func) {
+		$this->$init[$hook] = $func;
+	}
 	public function css($url) {
 		$this->css[] = $url;
 	}
@@ -162,9 +187,8 @@ class SiteControl {
 		$this->js[$url] = $top;
 	}
 }
-// for server $sc = new SiteControl(array('rootURL' => $_SERVER['DOCUMENT_ROOT'].'/', 'siteURL' => '/'));
 $sc = new SiteControl(array('rootURL' => ROOT_URL, 'siteURL' => SITE_URL));
-//var_dump($sc->rootURL);
+
 if ($sc->debug) {
 	ini_set('display_errors',1);
 	ini_set('display_startup_errors',1);
