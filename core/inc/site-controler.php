@@ -33,17 +33,6 @@ class SiteControl {
 			return $this->rootURL.'/core/'.$file;
 		}
 	}
-	public function make_menu($menu_name) {?>
-		<ul>
-			<?php
-				foreach ($menu_name as $menu) {
-					echo '<li><a href="'.$menu[0].'">'.$menu[1].'</a></li>';
-				}
-			?>
-		<ul>
-
-	<?php
-	}
 	private function sanitizeData() {
 		if(isset($_GET['p'])) {
 			$this->page = preg_replace('#[^a-zA-Z-]#', '', $_GET['p']);
@@ -157,10 +146,7 @@ class SiteControl {
 		global $db;
 		$file = 'init.php';
 		if(file_exists($this->rootURL.'/template/'.$file)){
-			include($this->rootURL.'/template/'.$file);
-		}
-		if(file_exists($this->rootURL.'/core/'.$file)){
-			include($this->rootURL.'/core/'.$file);
+			return include($this->rootURL.'/template/'.$file);
 		}
 	}
 	public function add_init($hook, $func) {

@@ -1,4 +1,9 @@
 <?php
+include 'config.php';
+include 'inc/site-controler.php';
+$sc->checkLogin($sc);
+include 'inc/check-login.php';
+$sc->load_init($sc);
 
 //add css and js here
 $sc->css('//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css');

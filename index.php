@@ -1,9 +1,6 @@
 <?php
-include 'config.php';
-include 'inc/site-controler.php';
-$sc->checkLogin($sc);
-include 'inc/check-login.php';
-$sc->load_init($sc);
+include 'core/init.php';
+
 if(file_exists($sc->rootURL.'inc/init/db-init.php')) {
 	include($sc->rootURL.'inc/init/db-init.php');
 }

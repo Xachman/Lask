@@ -1,5 +1,5 @@
 <?php
-    require $sc->rootURL.'/inc/scss.inc.php';
+    require $sc->rootURL.'core/inc/scss.inc.php';
     $scss = new scssc();
     //$scss->setFormatter("scss_formatter_compressed");
     if(file_exists($sc->rootURL."template/css/sass.scss")){
