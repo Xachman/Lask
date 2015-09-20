@@ -31,8 +31,11 @@ class SiteControl {
 			return $this->rootURL.'/template/'.$file;
 		}elseif(file_exists($this->rootURL.'/core/'.$file)){
 			return $this->rootURL.'/core/'.$file;
+		}elseif(file_exists($this->rootURL.$file)){
+			return $this->rootURL.$file;
 		}
-	}
+
+		}
 	private function sanitizeData() {
 		if(isset($_GET['p'])) {
 			$this->page = preg_replace('#[^a-zA-Z-]#', '', $_GET['p']);
@@ -142,11 +145,10 @@ class SiteControl {
 		//var_dump($html);
 		return $html;
 	}
-	public function load_init($sc) {
-		global $db;
+	public function load_template_init() {
 		$file = 'init.php';
 		if(file_exists($this->rootURL.'/template/'.$file)){
-			return include($this->rootURL.'/template/'.$file);
+			return $this->rootURL.'/template/'.$file;
 		}
 	}
 	public function add_init($hook, $func) {

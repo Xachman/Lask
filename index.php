@@ -4,7 +4,7 @@ include 'core/init.php';
 if(file_exists($sc->rootURL.'inc/init/db-init.php')) {
 	include($sc->rootURL.'inc/init/db-init.php');
 }
-
+include $sc->load_template_init();
 if($user_ok){
 	$sc->displayJsonData($sc);
 }
@@ -16,7 +16,7 @@ $sc->menu[] = array( $sc->siteURL.'logout', 'Logout');
 
 
 
-include 'header.php';
+include $sc->getTemplateFile('header.php');
 if($user_ok){
 	if($sc->selectPage($sc)) {
 	}else{
@@ -31,4 +31,4 @@ if($user_ok){
 			include($sc->rootURL.'login.php');
 	}
 }
-include 'footer.php'; ?>
+include $sc->getTemplateFile('footer.php'); ?>
