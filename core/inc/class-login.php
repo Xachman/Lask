@@ -15,7 +15,7 @@ class Login {
     die;
   }
   public function check_login($e) {
-    $row = $this->db->select_row("SELECT attempts, throttle FROM login_attempts WHERE ip='$this->ip' LIMIT 1");
+    $row = $this->db->select_row("SELECT attempts, throttle FROM login_attempts WHERE ip=$this->ip LIMIT 1");
     if($row[1] > time()) {
       die('You must wait '.date('i',  $row[1] - time()).' minutes before logging in again.');
     }elseif($row[0] > 4){
