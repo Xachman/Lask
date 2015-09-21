@@ -1,8 +1,8 @@
 <?php
 include 'core/init.php';
 
-if(file_exists($sc->rootURL.'inc/init/db-init.php')) {
-	include($sc->rootURL.'inc/init/db-init.php');
+if(file_exists($sc->rootURL.'core/inc/init/db-init.php')) {
+	include($sc->rootURL.'core/inc/init/db-init.php');
 }
 include $sc->load_template_init();
 if($user_ok){
