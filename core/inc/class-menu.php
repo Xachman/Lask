@@ -14,21 +14,22 @@ class Menu {
     ?>
     <ul id="<?php echo $menu_name ?>">
       <?php
-        foreach ($this->menus[$menu]['menu'] as $key => $val) {
-          if(!is_array($val)){
-              echo '<li><a href="'.$val.'">'.$key.'</a></li>';
-          }else{
-            echo '<li><a href="'.$val['url'].'">'.$key.'</a><ul class="submenu">';
-            foreach($val['sub-menu'] as $key => $val){
-              echo '<li><a href="'.$val.'">'.$key.'</a>';
-            }
-            echo '</ul></li>';
-          }
-        }
+        $this->loop_array($this->menus[$menu]['menu']);
       ?>
     <ul>
 
   <?php
+  }
+  public function loop_array($menu) {
+    foreach ($menu as $key => $val) {
+      if(!is_array($val)){
+          echo '<li><a href="'.$val.'">'.$key.'</a></li>';
+      }else{
+        echo '<li class="has-sub"><a href="'.$val['url'].'">'.$key.'</a><ul class="sub-menu">';
+        $this->loop_array($val['sub-menu']);
+        echo '</ul></li>';
+      }
+    }
   }
 }
 $menu = new Menu();

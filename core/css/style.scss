@@ -54,6 +54,21 @@ nav {
                 }
             }
         }
+        li.has-sub {
+          &:hover {
+            > .sub-menu {
+              display: block;
+            }
+          }
+        }
+        .sub-menu {
+          position: absolute;
+          display: none;
+          background: #1DB2FD;
+          li {
+            float: none;
+          }
+        }
     }
     &:after {
         content: '';

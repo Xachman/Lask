@@ -1,5 +1,5 @@
 <?php
-include($sc->rootURL.'inc/class-login.php');
+include($sc->rootURL.'core/inc/class-login.php');
 include_once($sc->rootURL.'inc/db_conx.php');
 
 if (isset($_POST['email'])){
