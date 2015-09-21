@@ -1,5 +1,5 @@
 <?php
-include($sc->rootURL.'inc/db_conx.php');
+include($sc->rootURL.'core/inc/db_conx.php');
 class Login {
   private $db;
   private $ip;
