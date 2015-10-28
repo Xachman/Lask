@@ -47,7 +47,11 @@ class SiteControl {
 	public function displayJsonData($sc) {
 		global $db, $log_id, $user_ok;
 		if(isset($_GET['d'])){
-			return include($this->rootURL.'/data/'.$this->data.'.php');
+			if(file_exists($this->rootURL.'/data/'.$this->data.'.php')){
+				return include($this->rootURL.'/data/'.$this->data.'.php');
+			}elseif(file_exists($this->rootURL.'/core/data/'.$this->data.'.php')){
+				return include($this->rootURL.'/core/data/'.$this->data.'.php');
+			}
 		}
 	}
 	private function getRequestURL() {
