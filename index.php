@@ -14,9 +14,7 @@ if($user_ok || isset($_GET['d']) && $_GET['d'] == 'status'){
 $sc->processAssets($sc);
 include $sc->getTemplateFile('header.php');
 if($user_ok){
-	if($sc->selectPage($sc)) {
-	}else{
-	}
+	$sc->selectPage($sc);
 }else{
 	if(!$sc->isUsers) {
 		include($sc->rootURL.'inc/init/add-first-user.php');
