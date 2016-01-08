@@ -154,6 +154,7 @@ class SiteControl {
 		if(file_exists($this->rootURL.'/template/'.$file)){
 			return $this->rootURL.'/template/'.$file;
 		}
+    return false;
 	}
 	public function add_init($hook, $func) {
 		$this->$init[$hook] = $func;

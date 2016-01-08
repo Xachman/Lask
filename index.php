@@ -4,7 +4,10 @@ include 'core/init.php';
 if(file_exists($sc->rootURL.'core/inc/init/db-init.php')) {
 	include($sc->rootURL.'core/inc/init/db-init.php');
 }
-include $sc->load_template_init();
+if($sc->load_template_init()){
+  include $sc->load_template_init();
+}
+
 if($user_ok || isset($_GET['d']) && $_GET['d'] == 'status'){
 	$sc->displayJsonData($sc);
 }
