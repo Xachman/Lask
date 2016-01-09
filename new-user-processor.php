@@ -1,6 +1,6 @@
 <?php
 if(isset( $_POST['user'])){
-	include_once('inc/db_conx.php');
+	include_once('core/inc/db_conx.php');
 	$f = preg_replace('#[^a-z ]#i', '', $_POST['first_name']);
 	$l = preg_replace('#[^a-z ]#i', '', $_POST['last_name']);
 	$u = preg_replace('#[^a-z0-9]#i', '', $_POST['user']);
@@ -67,6 +67,6 @@ if(isset( $_POST['user'])){
 			exit();
 		}
 	}
-	if($isUsers){
+	if($sc->isUsers){
 		exit();
 	}

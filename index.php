@@ -17,7 +17,7 @@ if($user_ok){
 	$sc->selectPage($sc);
 }else{
 	if(!$sc->isUsers) {
-		include($sc->rootURL.'inc/init/add-first-user.php');
+		include($sc->rootURL.'core/inc/init/add-first-user.php');
 	}else{
 		if(file_exists($sc->rootURL.'template/login.php'))
 			include($sc->rootURL.'template/login.php');

@@ -9,7 +9,7 @@
 	</head>
 	<body>
 		<header>
-			<div class="title">App Template</div>
+      <div class="title">App Template <?php if($user_ok){echo 'Welcome';} ?></div>
 			<nav>
 
 			</nav>
